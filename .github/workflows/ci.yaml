@@ -1,0 +1,37 @@
+name: Continuous Integration
+
+on: [push, pull_request]
+
+jobs:
+  test:
+    name: Test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get latest stable Rust
+        run: rustup toolchain install stable
+      - name: Check out source
+        uses: actions/checkout@v2
+      - name: Run tests
+        run: cargo test
+
+  format:
+    name: Check formatting
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get latest stable Rust
+        run: rustup toolchain install stable
+      - name: Check out source
+        uses: actions/checkout@v2
+      - name: Run rustfmt
+        run: cargo fmt -- --check
+
+  clippy:
+    name: Static analysis
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get latest stable Rust
+        run: rustup toolchain install stable
+      - name: Check out source
+        uses: actions/checkout@v2
+      - name: Run Clippy
+        run: cargo clippy --all-targets --all-features -- -D warnings
