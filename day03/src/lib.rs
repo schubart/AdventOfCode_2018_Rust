@@ -1,3 +1,4 @@
+#![cfg(test)]
 #![warn(clippy::pedantic)]
 
 use counter::Counter;
@@ -40,15 +41,7 @@ impl Claim {
     }
 }
 
-/// # Panics
-///
-/// Will panic if the input is malformed.
-///
-/// ```
-/// assert_eq!(111630, day03::part1());
-/// ```
-#[must_use]
-pub fn part1() -> usize {
+fn part1() -> usize {
     include_str!("input.txt")
         .lines()
         .map(|line| Claim::parse(line).unwrap())
@@ -59,15 +52,7 @@ pub fn part1() -> usize {
         .count()
 }
 
-/// # Panics
-///
-/// Will panic if the input is malformed.
-///
-/// ```
-/// assert_eq!(Some("724".to_string()), day03::part2());
-/// ```
-#[must_use]
-pub fn part2() -> Option<String> {
+fn part2() -> Option<String> {
     let claims = include_str!("input.txt")
         .lines()
         .map(|line| Claim::parse(line).unwrap());
@@ -81,4 +66,14 @@ pub fn part2() -> Option<String> {
         .filter(|claim| claim.coords().all(|coord| frequency[&coord] == 1))
         .map(|claim| claim.id)
         .next()
+}
+
+#[test]
+fn test_part1() {
+    assert_eq!(111_630, part1());
+}
+
+#[test]
+fn test_part2() {
+    assert_eq!(Some("724".to_string()), part2());
 }

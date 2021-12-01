@@ -1,3 +1,4 @@
+#![cfg(test)]
 #![warn(clippy::pedantic)]
 
 use counter::Counter;
@@ -74,15 +75,7 @@ fn nearest(target: Point, candidates: &[Point]) -> Option<Point> {
     }
 }
 
-/// # Panics
-///
-/// Will panic if the input is malformed or empty.
-///
-/// ```
-/// assert_eq!(Some(5975), day06::part1());
-/// ```
-#[must_use]
-pub fn part1() -> Option<usize> {
+fn part1() -> Option<usize> {
     let points: Vec<_> = include_str!("input.txt")
         .lines()
         .map(|line| parse(line).unwrap())
@@ -115,15 +108,7 @@ pub fn part1() -> Option<usize> {
         .map(|(_point, size)| *size)
 }
 
-/// # Panics
-///
-/// Will panic if the input is malformed or empty.
-///
-/// ```
-/// assert_eq!(38670, day06::part2());
-/// ```
-#[must_use]
-pub fn part2() -> usize {
+fn part2() -> usize {
     let points: Vec<_> = include_str!("input.txt")
         .lines()
         .map(|line| parse(line).unwrap())
@@ -134,4 +119,14 @@ pub fn part2() -> usize {
     iproduct!(xs, ys)
         .filter(|p1| points.iter().map(|p2| distance(*p1, *p2)).sum::<Scalar>() < 10_000)
         .count()
+}
+
+#[test]
+fn test_part1() {
+    assert_eq!(Some(5_975), part1());
+}
+
+#[test]
+fn test_part2() {
+    assert_eq!(38_670, part2());
 }

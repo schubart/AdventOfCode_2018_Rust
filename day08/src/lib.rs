@@ -1,3 +1,4 @@
+#![cfg(test)]
 #![warn(clippy::pedantic)]
 
 type Number = usize;
@@ -12,15 +13,7 @@ fn node_value1(numbers: &mut impl Iterator<Item = Number>) -> Number {
     child_sum + data_sum
 }
 
-/// # Panics
-///
-/// Will panic if there is too much or not enough input or it is malformed.
-///
-/// ```
-/// assert_eq!(45_618, day08::part1());
-/// ```
-#[must_use]
-pub fn part1() -> Number {
+fn part1() -> Number {
     let mut numbers = include_str!("input.txt")
         .trim()
         .split(' ')
@@ -53,15 +46,7 @@ fn node_value2(numbers: &mut impl Iterator<Item = Number>) -> Number {
     }
 }
 
-/// # Panics
-///
-/// Will panic if there is too much or not enough input or it is malformed.
-///
-/// ```
-/// assert_eq!(22_306, day08::part2());
-/// ```
-#[must_use]
-pub fn part2() -> Number {
+fn part2() -> Number {
     let mut numbers = include_str!("input.txt")
         .trim()
         .split(' ')
@@ -70,4 +55,14 @@ pub fn part2() -> Number {
     let result = node_value2(&mut numbers);
     assert_eq!(None, numbers.next()); // Iterator should be fully consumed.
     result
+}
+
+#[test]
+fn test_part1() {
+    assert_eq!(45_618, part1());
+}
+
+#[test]
+fn test_part2() {
+    assert_eq!(22_306, part2());
 }

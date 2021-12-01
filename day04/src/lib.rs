@@ -1,3 +1,4 @@
+#![cfg(test)]
 #![warn(clippy::pedantic)]
 
 use counter::Counter;
@@ -102,18 +103,7 @@ fn summarize() -> Summary {
     }
 }
 
-/// # Panics
-///
-/// Will panic if input id syntactically or semantically malformed.
-///
-/// ```
-/// let (id, time) = day04::part1();
-/// assert_eq!(2593, id);
-/// assert_eq!(40, time);
-/// assert_eq!(103720, id * time);
-/// ```
-#[must_use]
-pub fn part1() -> (Guard, Minute) {
+fn part1() -> (Guard, Minute) {
     let summary = summarize();
 
     // Find the guard who slept the most minutes.
@@ -128,18 +118,7 @@ pub fn part1() -> (Guard, Minute) {
     (guard, minute)
 }
 
-/// # Panics
-///
-/// Will panic if input id syntactically or semantically malformed.
-///
-/// ```
-/// let (id, time) = day04::part2();
-/// assert_eq!(3361, id);
-/// assert_eq!(33, time);
-/// assert_eq!(110913, id * time);
-/// ```
-#[must_use]
-pub fn part2() -> (Guard, Minute) {
+fn part2() -> (Guard, Minute) {
     let summary = summarize();
 
     // Find the guard whose most frequent sleep minute is most frequent overall.
@@ -155,4 +134,20 @@ pub fn part2() -> (Guard, Minute) {
     let (minute, _frequency) = counter.most_common()[0];
 
     (guard, minute)
+}
+
+#[test]
+fn test_part1() {
+    let (id, time) = part1();
+    assert_eq!(2_593, id);
+    assert_eq!(40, time);
+    assert_eq!(103_720, id * time);
+}
+
+#[test]
+fn test_part() {
+    let (id, time) = part2();
+    assert_eq!(3_361, id);
+    assert_eq!(33, time);
+    assert_eq!(110_913, id * time);
 }

@@ -1,13 +1,10 @@
+#![cfg(test)]
 #![warn(clippy::pedantic)]
 
 use counter::Counter;
 use itertools::Itertools;
 
-/// ```
-/// assert_eq!(6200, day02::part1());
-/// ```
-#[must_use]
-pub fn part1() -> usize {
+fn part1() -> usize {
     let mut count_2 = 0;
     let mut count_3 = 0;
 
@@ -26,11 +23,7 @@ pub fn part1() -> usize {
     count_2 * count_3
 }
 
-/// ```
-/// assert_eq!(Some("xpysnnkqrbuhefmcajodplyzw".to_string()), day02::part2());
-/// ```
-#[must_use]
-pub fn part2() -> Option<String> {
+fn part2() -> Option<String> {
     for (line1, line2) in include_str!("input.txt")
         .lines()
         .tuple_combinations()
@@ -49,4 +42,14 @@ pub fn part2() -> Option<String> {
     }
 
     None
+}
+
+#[test]
+fn test_part1() {
+    assert_eq!(6_200, part1());
+}
+
+#[test]
+fn test_part2() {
+    assert_eq!(Some("xpysnnkqrbuhefmcajodplyzw".to_string()), part2());
 }
